@@ -114,12 +114,11 @@ app.get('/api/cuisines', (_req: Request, res: Response) => {
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../../frontend/dist')));
   
-  // Catch-all route for SPA
-  app.get('*', (req: Request, res: Response) => {
+  // Catch-all route for SPA - serve index.html for non-API routes
+  app.use((req: Request, res: Response, next) => {
     // Don't serve index.html for API routes
     if (req.path.startsWith('/api/') || req.path === '/health') {
-      res.status(404).json({ error: 'Not found' });
-      return;
+      return next();
     }
     res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
   });
