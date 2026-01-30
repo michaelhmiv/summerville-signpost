@@ -17,9 +17,11 @@ export default {
         'sage-dark': '#A8B0D4',
         cream: '#FFFDD0',
         'cream-dark': '#F5F3C0',
+        'warm-white': '#FFFAF5',
+        charcoal: '#3D3D3D',
       },
       fontFamily: {
-        serif: ['Playfair Display', 'Georgia', 'serif'],
+        serif: ['Georgia', 'Times New Roman', 'serif'],
         sans: ['Inter', 'system-ui', 'sans-serif'],
       },
     },

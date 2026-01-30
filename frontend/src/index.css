@@ -1,14 +1,6 @@
-@import "tailwindcss";
-
-@theme {
-  --color-mint: #A8E6CF;
-  --color-dusty-rose: #FFB7B2;
-  --color-pale-butter: #FFDAC1;
-  --color-soft-sage: #C7CEEA;
-  --color-cream: #FFFDD0;
-  --color-warm-white: #FFFAF5;
-  --color-charcoal: #3D3D3D;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   font-family: 'Georgia', 'Times New Roman', serif;
