@@ -67,7 +67,7 @@ app.get('/api/spots/neighborhood/:area', (req: Request, res: Response) => {
 
 // Get single spot by ID
 app.get('/api/spots/:id', (req: Request, res: Response) => {
-  const id = parseInt(req.params.id);
+  const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
   const spot = spots.find(s => s.id === id);
   
   if (!spot) {
