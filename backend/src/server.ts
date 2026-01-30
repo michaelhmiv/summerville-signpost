@@ -1,6 +1,7 @@
 import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
 
 dotenv.config();
 
@@ -109,7 +110,22 @@ app.get('/api/cuisines', (_req: Request, res: Response) => {
   res.json(cuisines.sort((a, b) => b.count - a.count));
 });
 
-// 404 handler
+// Serve static files from frontend build in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../../frontend/dist')));
+  
+  // Catch-all route for SPA
+  app.get('*', (req: Request, res: Response) => {
+    // Don't serve index.html for API routes
+    if (req.path.startsWith('/api/') || req.path === '/health') {
+      res.status(404).json({ error: 'Not found' });
+      return;
+    }
+    res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
+  });
+}
+
+// 404 handler for API routes
 app.use((_req: Request, res: Response) => {
   res.status(404).json({ error: 'Not found' });
 });
