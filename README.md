@@ -36,15 +36,37 @@ npm run dev:backend
 
 ## Deployment (exe.dev)
 
-```bash
-# Development VM
-npm run build
-cd backend && npm start
+### Environments
+- **Dev:** https://signpost-dev.exe.xyz/ (auto-deployed on push)
+- **Prod:** https://signpost-prod.exe.xyz/ (manual deploy)
 
-# Production VM
-npm run build:prod
+### Manual Deploy to Production
+
+```bash
+# One-command deploy
+./deploy.sh
+```
+
+Or manually:
+```bash
+# Build frontend
+npm run build
+
+# Deploy to production VM
 cd backend && NODE_ENV=production npm start
 ```
+
+### SSH Setup (First Time)
+
+1. Get your SSH key from [exe.dev dashboard](https://exe.dev)
+2. Add to `~/.ssh/config`:
+```
+Host exe.dev
+    HostName exe.dev
+    User git
+    IdentityFile ~/.ssh/exe_dev_key
+```
+3. Test: `ssh exe.dev ls`
 
 ## Environment Variables
 
