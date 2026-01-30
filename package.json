@@ -1,0 +1,17 @@
+{
+  "name": "summerville-signpost",
+  "version": "1.0.0",
+  "description": "Community hub for Summerville, SC",
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:frontend": "cd frontend && npm run dev",
+    "dev:backend": "cd backend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "build:prod": "npm run build && cd backend && NODE_ENV=production npm start",
+    "install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
+    "test": "cd frontend && npm test && cd ../backend && npm test"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
