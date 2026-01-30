@@ -112,7 +112,7 @@ app.get('/api/cuisines', (_req: Request, res: Response) => {
 
 // Serve static files from frontend build in production
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../../frontend/dist')));
+  app.use(express.static(path.join(__dirname, 'public')));
   
   // Catch-all route for SPA - serve index.html for non-API routes
   app.use((req: Request, res: Response, next) => {
@@ -120,7 +120,7 @@ if (process.env.NODE_ENV === 'production') {
     if (req.path.startsWith('/api/') || req.path === '/health') {
       return next();
     }
-    res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
+    res.sendFile(path.join(__dirname, 'public/index.html'));
   });
 }
 

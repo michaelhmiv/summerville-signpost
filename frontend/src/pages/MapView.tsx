@@ -104,12 +104,12 @@ export default function MapView() {
       {/* Legend */}
       <div className="absolute bottom-4 left-4 bg-cream p-4 rounded-xl border-2 border-butter shadow-lg max-w-xs">
         <h3 className="font-serif font-bold text-charcoal mb-3 flex items-center">
-          <MapPin className="w-4 h-4 mr-2 text-dusty-rose" />
+          <MapPin className="w-4 h-4 mr-2 text-rose" />
           Neighborhoods
         </h3>
         <div className="space-y-2 text-sm">
           <div className="flex items-center">
-            <span className="w-3 h-3 rounded-full bg-mint border-2 border-dusty-rose mr-2" />
+            <span className="w-3 h-3 rounded-full bg-mint border-2 border-rose mr-2" />
             <span className="text-charcoal/80">Historic Downtown (12)</span>
           </div>
           <div className="flex items-center">

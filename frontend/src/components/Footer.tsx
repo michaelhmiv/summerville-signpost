@@ -16,7 +16,7 @@ export default function Footer() {
           
           <div className="flex items-center space-x-2 text-sm text-charcoal/70">
             <span>Made with</span>
-            <Heart className="w-4 h-4 text-dusty-rose fill-dusty-rose" />
+            <Heart className="w-4 h-4 text-rose fill-rose" />
             <span>for Summerville</span>
           </div>
         </div>

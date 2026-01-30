@@ -25,7 +25,7 @@ export default function SpotCard({ spot }: SpotCardProps) {
 
         {/* Address */}
         <div className="flex items-center text-sm text-charcoal/70 mb-3">
-          <MapPin className="w-4 h-4 mr-1 text-dusty-rose" />
+          <MapPin className="w-4 h-4 mr-1 text-rose" />
           {spot.address}
         </div>
 
@@ -69,7 +69,7 @@ export default function SpotCard({ spot }: SpotCardProps) {
         <div className="flex items-center justify-between pt-3 border-t border-butter">
           <Link
             to={`/spot/${spot.id}`}
-            className="flex items-center text-sm font-medium text-dusty-rose hover:text-dusty-rose-dark transition-colors"
+            className="flex items-center text-sm font-medium text-rose hover:text-rose-dark transition-colors"
           >
             View Details
             <ExternalLink className="w-3 h-3 ml-1" />

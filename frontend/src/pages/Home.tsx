@@ -11,7 +11,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-charcoal mb-4">
             Discover Summerville's Best
-            <span className="block text-dusty-rose">Happy Hours</span>
+            <span className="block text-rose">Happy Hours</span>
           </h1>
           <p className="text-lg text-charcoal/70 mb-8 max-w-2xl mx-auto">
             Your local guide to the best deals, hidden gems, and neighborhood favorites 
@@ -20,7 +20,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/map"
-              className="inline-flex items-center justify-center px-6 py-3 bg-dusty-rose text-white rounded-lg font-medium hover:bg-dusty-rose-dark transition-colors"
+              className="inline-flex items-center justify-center px-6 py-3 bg-rose text-white rounded-lg font-medium hover:bg-rose-dark transition-colors"
             >
               <MapPin className="w-5 h-5 mr-2" />
               View Map
@@ -41,7 +41,7 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="text-center p-4 bg-cream rounded-lg">
-              <p className="text-3xl font-serif font-bold text-dusty-rose">{spots.length}</p>
+              <p className="text-3xl font-serif font-bold text-rose">{spots.length}</p>
               <p className="text-sm text-charcoal/60">Happy Hour Spots</p>
             </div>
             <div className="text-center p-4 bg-cream rounded-lg">
@@ -83,7 +83,7 @@ export default function Home() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-cream p-6 rounded-xl border-2 border-butter">
-              <Star className="w-8 h-8 text-dusty-rose mb-3" />
+              <Star className="w-8 h-8 text-rose mb-3" />
               <h3 className="font-serif font-bold text-charcoal mb-2">Community Reviews</h3>
               <p className="text-sm text-charcoal/60">
                 Honest reviews from locals who know best. No generic ratings.

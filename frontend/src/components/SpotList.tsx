@@ -63,7 +63,7 @@ export default function SpotList({ spots }: SpotListProps) {
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1">
             <label className="flex items-center text-sm font-medium text-charcoal mb-2">
-              <MapPin className="w-4 h-4 mr-1 text-dusty-rose" />
+              <MapPin className="w-4 h-4 mr-1 text-rose" />
               Neighborhood
             </label>
             <select

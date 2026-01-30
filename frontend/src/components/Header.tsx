@@ -8,8 +8,8 @@ export default function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
-            <div className="bg-cream p-2 rounded-full border-2 border-dusty-rose">
-              <MapPin className="w-6 h-6 text-dusty-rose" />
+            <div className="bg-cream p-2 rounded-full border-2 border-rose">
+              <MapPin className="w-6 h-6 text-rose" />
             </div>
             <div>
               <h1 className="text-xl font-serif font-bold text-charcoal">

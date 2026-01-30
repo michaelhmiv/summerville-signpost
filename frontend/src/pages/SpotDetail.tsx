@@ -15,7 +15,7 @@ export default function SpotDetail() {
           </h2>
           <Link
             to="/"
-            className="inline-flex items-center text-dusty-rose hover:text-dusty-rose-dark"
+            className="inline-flex items-center text-rose hover:text-rose-dark"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to home
@@ -51,8 +51,8 @@ export default function SpotDetail() {
                 <p className="text-lg text-charcoal/60">{spot.cuisine}</p>
               </div>
               <div className="flex gap-2">
-                <button className="p-2 bg-warm-white rounded-lg border-2 border-butter hover:border-dusty-rose transition-colors">
-                  <Heart className="w-5 h-5 text-dusty-rose" />
+                <button className="p-2 bg-warm-white rounded-lg border-2 border-butter hover:border-rose transition-colors">
+                  <Heart className="w-5 h-5 text-rose" />
                 </button>
                 <button className="p-2 bg-warm-white rounded-lg border-2 border-butter hover:border-mint-dark transition-colors">
                   <Share2 className="w-5 h-5 text-mint-dark" />
@@ -80,7 +80,7 @@ export default function SpotDetail() {
               <ul className="space-y-2">
                 {spot.happyHour.deals.map((deal, idx) => (
                   <li key={idx} className="flex items-start text-charcoal/80">
-                    <span className="w-2 h-2 bg-dusty-rose rounded-full mt-2 mr-3 flex-shrink-0" />
+                    <span className="w-2 h-2 bg-rose rounded-full mt-2 mr-3 flex-shrink-0" />
                     {deal}
                   </li>
                 ))}
@@ -110,7 +110,7 @@ export default function SpotDetail() {
             {/* Location */}
             <div className="bg-cream rounded-xl border-2 border-butter p-6">
               <div className="flex items-center mb-4">
-                <MapPin className="w-6 h-6 text-dusty-rose mr-2" />
+                <MapPin className="w-6 h-6 text-rose mr-2" />
                 <h2 className="text-xl font-serif font-bold text-charcoal">
                   Location
                 </h2>
@@ -130,7 +130,7 @@ export default function SpotDetail() {
                 {spot.phone && (
                   <a
                     href={`tel:${spot.phone}`}
-                    className="flex items-center text-charcoal/80 hover:text-dusty-rose transition-colors"
+                    className="flex items-center text-charcoal/80 hover:text-rose transition-colors"
                   >
                     <Phone className="w-5 h-5 mr-3 text-sage-dark" />
                     {spot.phone}
@@ -141,7 +141,7 @@ export default function SpotDetail() {
                     href={spot.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center text-charcoal/80 hover:text-dusty-rose transition-colors"
+                    className="flex items-center text-charcoal/80 hover:text-rose transition-colors"
                   >
                     <Globe className="w-5 h-5 mr-3 text-sage-dark" />
                     Visit Website
