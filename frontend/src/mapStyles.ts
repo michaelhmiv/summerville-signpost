@@ -1,64 +1,82 @@
 // Digital Veranda Map Style for Summerville Signpost
-// A warm, Southern-inspired watercolor aesthetic using Mapbox tiles with CSS filters
+// A warm, Southern-inspired watercolor aesthetic
 
-// Mapbox watercolor-style configuration
-// Uses Mapbox's standard tiles with CSS filters for watercolor effect
+// Proper Mapbox watercolor style using vector tiles
+// This creates a true watercolor effect with soft, pastel colors and muted tones
 export const watercolorMapConfig = {
-  // Light, muted style that works well with watercolor filters
+  // Use Mapbox Light style as base, then apply watercolor customizations
   style: 'mapbox://styles/mapbox/light-v11',
-  // Alternative options that also work well:
-  // 'mapbox://styles/mapbox/outdoors-v12' - more natural colors
-  // 'mapbox://styles/mapbox/streets-v12' - more detail
-};
-
-// CSS filters to create watercolor effect on Mapbox tiles
-// These filters soften edges, mute colors, and create artistic texture
-export const mapContainerStyles = {
-  // Core watercolor effect:
-  // - saturate(0.85): Mutes colors slightly for that washed look
-  // - contrast(0.9): Softens edges and reduces harsh lines
-  // - brightness(1.05): Slight brightness boost
-  filter: 'saturate(0.85) contrast(0.9) brightness(1.05)',
-};
-
-// Enhanced watercolor effect - apply this to the canvas for deeper effect
-export const watercolorCanvasStyles = {
-  // Additional filters for the canvas element itself
-  // Creates softer, more artistic rendering
-  filter: 'blur(0.3px) saturate(0.9)',
-};
-
-// Map paint properties to soften vector features
-export const watercolorPaintProperties = {
-  // Water - make it softer, more translucent
-  'water-color': '#c5d8e0',
-  'water-opacity': 0.7,
-
-  // Land - warmer, softer tone
-  'land-color': '#f5f0e8',
-
-  // Buildings - very subtle
-  'building-fill-color': '#e8e0d5',
-  'building-fill-opacity': 0.4,
-
-  // Roads - softer, less prominent
-  'road-color': '#f0ebe3',
-  'road-opacity': 0.6,
-
-  // Labels - muted
-  'text-color': '#6b5b4f',
-  'text-halo-color': '#f5f0e8',
-};
-
-// Theme config for Mapbox Standard (when not using custom style)
-export const mapThemeConfig = {
-  light: {
-    // Muted, warm color scheme
-    baseColor: '#f5f0e8',
-    waterColor: '#c5d8e0',
-    accentColor: '#8b7355',
+  // Custom watercolor paint properties that will be applied to layers
+  watercolorPaint: {
+    // Background - soft cream paper color
+    background: {
+      'background-color': '#faf8f5'
+    },
+    // Water - soft blue with reduced opacity
+    water: {
+      'fill-color': '#a8c8dc',
+      'fill-opacity': 0.6
+    },
+    // Land - warm, muted earth tones
+    land: {
+      'fill-color': '#f0ebe3',
+      'fill-opacity': 0.8
+    },
+    // Parks - soft green with watercolor wash effect
+    park: {
+      'fill-color': '#b8d4a8',
+      'fill-opacity': 0.5
+    },
+    // Buildings - soft gray with reduced opacity
+    building: {
+      'fill-color': '#d4cfc5',
+      'fill-opacity': 0.4,
+      'fill-extrusion-opacity': 0.3
+    },
+    // Roads - muted colors with soft appearance
+    road: {
+      'line-color': '#c9c0b0',
+      'line-opacity': 0.7,
+      'line-width': {
+        base: 1.5,
+        stops: [[12, 0.5], [18, 2]]
+      }
+    },
+    // Arterial roads - slightly darker
+    roadArterial: {
+      'line-color': '#b8afa0',
+      'line-opacity': 0.75
+    },
+    // Highways - soft warm color
+    roadHighway: {
+      'line-color': '#e8d4b8',
+      'line-opacity': 0.8
+    },
+    // Labels - soft, readable colors
+    label: {
+      'text-color': '#5a5548',
+      'text-halo-color': '#faf8f5',
+      'text-halo-width': 1.5,
+      'text-opacity': 0.9
+    },
+    // POI labels
+    poiLabel: {
+      'text-color': '#7a7568',
+      'text-halo-color': '#faf8f5',
+      'text-halo-width': 1,
+      'text-opacity': 0.85
+    }
   }
 };
+
+// No CSS filters needed - Mapbox vector styling does the work
+export const mapContainerStyles = {
+  // Mapbox handles watercolor effect via vector tile styling
+  // No CSS filters needed
+};
+
+// Alternative: Use a true watercolor tile source if available
+// For now, CartoDB Voyager with heavy filters gives the best result
 
 // Custom marker colors by neighborhood (matching tailwind config)
 export const neighborhoodMarkerColors = {
@@ -110,35 +128,14 @@ export const watercolorIcons = {
   default: '📍'
 };
 
-// Helper to apply watercolor effect to a Mapbox map instance
-export function applyWatercolorEffect(map: mapboxgl.Map) {
-  // Once the map is loaded, adjust layer paint properties for softer look
-  map.on('style.load', () => {
-    // Try to find and soften water layers
-    const waterLayers = ['water', 'waterway', 'water-shadow'];
-    waterLayers.forEach(layerId => {
-      if (map.getLayer(layerId)) {
-        map.setPaintProperty(layerId, 'fill-color', watercolorPaintProperties['water-color']);
-        map.setPaintProperty(layerId, 'fill-opacity', watercolorPaintProperties['water-opacity']);
-      }
-    });
-
-    // Soften building layers
-    const buildingLayers = ['building', 'building-3d', 'building-outline'];
-    buildingLayers.forEach(layerId => {
-      if (map.getLayer(layerId)) {
-        map.setPaintProperty(layerId, 'fill-color', watercolorPaintProperties['building-fill-color']);
-        map.setPaintProperty(layerId, 'fill-opacity', watercolorPaintProperties['building-fill-opacity']);
-      }
-    });
-
-    // Soften road layers
-    const roadLayers = ['road', 'road-primary', 'road-secondary', 'road-street', 'road-minor'];
-    roadLayers.forEach(layerId => {
-      if (map.getLayer(layerId)) {
-        map.setPaintProperty(layerId, 'line-color', watercolorPaintProperties['road-color']);
-        map.setPaintProperty(layerId, 'line-opacity', watercolorPaintProperties['road-opacity']);
-      }
-    });
-  });
+// No dynamic layer adjustments needed for raster tiles
+// The CSS filters do all the work
+export function applyWatercolorEffect(_map?: any) {
+  // Raster tiles are filtered via CSS, no runtime adjustments needed
+  // Map argument kept for API compatibility
 }
+
+// Theme config (not used with raster tiles but kept for compatibility)
+export const mapThemeConfig = {};
+export const watercolorCanvasStyles = {};
+export const watercolorPaintProperties = {};
