@@ -5,10 +5,11 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import { restaurants } from '../data/restaurants';
 import type { Restaurant, UserLocation } from '../types';
 import { NEIGHBORHOOD_COLORS, PRICE_LEVEL_MAP } from '../types';
+import { watercolorMapConfig, mapContainerStyles, mapThemeConfig, applyWatercolorEffect } from '../mapStyles';
 import { MapPin, Crosshair, List, X, Star, Clock, Phone } from 'lucide-react';
 
-// Mapbox token
-const MAPBOX_TOKEN = import.meta.env.VITE_MAPBOX_TOKEN || 'pk.eyJ1IjoiZXhhbXBsZSIsImEiOiJja2h6ZzB4eXgwMjQ2MnNxcXc4Z2E5a2VjIn0.example';
+// Mapbox token - hardcoded for now to ensure it works
+const MAPBOX_TOKEN = 'pk.eyJ1IjoibWljaGFlbGhtaXYiLCJhIjoiY21sMXdkemZsMGUwcTNlcHZmaWRzdTBkYyJ9.VavKWE8B14V1ZT_4py49pw';
 
 // Summerville center
 const SUMMERVILLE_CENTER: [number, number] = [-80.1753, 33.0185];
@@ -98,12 +99,23 @@ export default function MapView() {
     if (!mapContainer.current) return;
 
     mapboxgl.accessToken = MAPBOX_TOKEN;
-    
+
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/mapbox/light-v11',
+      style: watercolorMapConfig.style,
       center: SUMMERVILLE_CENTER,
       zoom: 13,
+      config: {
+        'basemap': mapThemeConfig
+      }
+    } as any);
+
+    // Apply watercolor effect adjustments to the map layers
+    applyWatercolorEffect(map.current);
+
+    // Handle map errors
+    map.current.on('error', (e) => {
+      console.error('Mapbox error:', e);
     });
 
     // Add navigation controls
@@ -163,7 +175,7 @@ export default function MapView() {
   return (
     <div className="relative h-[calc(100vh-4rem)]">
       {/* Map Container */}
-      <div ref={mapContainer} className="w-full h-full" />
+      <div ref={mapContainer} className="w-full h-full" style={{ minHeight: '500px', ...mapContainerStyles }} />
       
       {/* Top Controls */}
       <div className="absolute top-4 left-4 right-4 flex items-start justify-between pointer-events-none">

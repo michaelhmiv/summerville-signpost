@@ -1,11 +1,19 @@
+import { useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import mapboxgl from 'mapbox-gl';
+import 'mapbox-gl/dist/mapbox-gl.css';
 import { getRestaurantById } from '../data/restaurants';
 import { NEIGHBORHOOD_COLORS, PRICE_LEVEL_MAP } from '../types';
+import { watercolorMapConfig, mapContainerStyles, mapThemeConfig, applyWatercolorEffect } from '../mapStyles';
 import { MapPin, Phone, Globe, Clock, Star, ArrowLeft, Heart, Share, Navigation } from 'lucide-react';
+
+const MAPBOX_TOKEN = 'pk.eyJ1IjoibWljaGFlbGhtaXYiLCJhIjoiY21sMXdkemZsMGUwcTNlcHZmaWRzdTBkYyJ9.VavKWE8B14V1ZT_4py49pw';
 
 export default function SpotDetail() {
   const { id } = useParams<{ id: string }>();
   const restaurant = id ? getRestaurantById(id) : undefined;
+  const mapContainer = useRef<HTMLDivElement>(null);
+  const map = useRef<mapboxgl.Map | null>(null);
 
   if (!restaurant) {
     return (
@@ -21,6 +29,47 @@ export default function SpotDetail() {
 
   const colors = NEIGHBORHOOD_COLORS[restaurant.neighborhood] || NEIGHBORHOOD_COLORS['Summerville Area'];
   const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${restaurant.coordinates.lat},${restaurant.coordinates.lng}`;
+
+  // Initialize mini-map
+  useEffect(() => {
+    if (!mapContainer.current || !restaurant) return;
+
+    mapboxgl.accessToken = MAPBOX_TOKEN;
+
+    map.current = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: watercolorMapConfig.style,
+      center: [restaurant.coordinates.lng, restaurant.coordinates.lat],
+      zoom: 15,
+      interactive: false, // Static mini-map
+      config: {
+        'basemap': mapThemeConfig
+      }
+    } as any);
+
+    // Apply watercolor effect adjustments
+    applyWatercolorEffect(map.current);
+
+    // Add marker
+    const el = document.createElement('div');
+    el.className = 'mini-map-marker';
+    el.innerHTML = `
+      <div class="w-8 h-8 rounded-full ${colors.bg} ${colors.border} border-2 flex items-center justify-center shadow-md">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="${colors.text}">
+          <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+      </div>
+    `;
+
+    new mapboxgl.Marker(el)
+      .setLngLat([restaurant.coordinates.lng, restaurant.coordinates.lat])
+      .addTo(map.current);
+
+    return () => {
+      map.current?.remove();
+    };
+  }, [restaurant, colors]);
 
   return (
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -148,9 +197,11 @@ export default function SpotDetail() {
             Location
           </h2>
           <p className="text-porch-600 mb-4">{restaurant.address}</p>
-          <div className="aspect-video rounded-lg bg-porch-100 flex items-center justify-center">
-            <span className="text-porch-400 text-sm">Map view coming soon</span>
-          </div>
+          <div
+            ref={mapContainer}
+            className="aspect-video rounded-lg overflow-hidden border border-porch-200"
+            style={mapContainerStyles}
+          />
         </div>
 
         {/* Hours */}
