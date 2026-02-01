@@ -128,14 +128,93 @@ export const watercolorIcons = {
   default: '📍'
 };
 
-// No dynamic layer adjustments needed for raster tiles
-// The CSS filters do all the work
-export function applyWatercolorEffect(_map?: any) {
-  // Raster tiles are filtered via CSS, no runtime adjustments needed
-  // Map argument kept for API compatibility
+// Apply watercolor paint properties to Mapbox layers
+export function applyWatercolorEffect(map: mapboxgl.Map) {
+  map.on('style.load', () => {
+    const paint = watercolorMapConfig.watercolorPaint;
+
+    // Apply background color
+    if (map.getLayer('background')) {
+      map.setPaintProperty('background', 'background-color', paint.background['background-color']);
+    }
+
+    // Apply water styling
+    ['water', 'waterway', 'water-shadow'].forEach(layerId => {
+      if (map.getLayer(layerId)) {
+        map.setPaintProperty(layerId, 'fill-color', paint.water['fill-color']);
+        map.setPaintProperty(layerId, 'fill-opacity', paint.water['fill-opacity']);
+      }
+    });
+
+    // Apply land styling
+    ['land', 'landuse'].forEach(layerId => {
+      if (map.getLayer(layerId)) {
+        map.setPaintProperty(layerId, 'fill-color', paint.land['fill-color']);
+        map.setPaintProperty(layerId, 'fill-opacity', paint.land['fill-opacity']);
+      }
+    });
+
+    // Apply park/green space styling
+    ['park', 'green', 'grass', 'wood'].forEach(layerId => {
+      if (map.getLayer(layerId)) {
+        map.setPaintProperty(layerId, 'fill-color', paint.park['fill-color']);
+        map.setPaintProperty(layerId, 'fill-opacity', paint.park['fill-opacity']);
+      }
+    });
+
+    // Apply building styling
+    ['building', 'building-3d', 'building-outline'].forEach(layerId => {
+      if (map.getLayer(layerId)) {
+        map.setPaintProperty(layerId, 'fill-color', paint.building['fill-color']);
+        map.setPaintProperty(layerId, 'fill-opacity', paint.building['fill-opacity']);
+      }
+    });
+
+    // Apply road styling
+    ['road', 'road-primary', 'road-secondary', 'road-street', 'road-minor', 'road-path'].forEach(layerId => {
+      if (map.getLayer(layerId)) {
+        map.setPaintProperty(layerId, 'line-color', paint.road['line-color']);
+        map.setPaintProperty(layerId, 'line-opacity', paint.road['line-opacity']);
+      }
+    });
+
+    // Apply arterial road styling
+    ['road-arterial', 'road-major'].forEach(layerId => {
+      if (map.getLayer(layerId)) {
+        map.setPaintProperty(layerId, 'line-color', paint.roadArterial['line-color']);
+        map.setPaintProperty(layerId, 'line-opacity', paint.roadArterial['line-opacity']);
+      }
+    });
+
+    // Apply highway styling
+    ['road-motorway', 'road-trunk', 'road-highway'].forEach(layerId => {
+      if (map.getLayer(layerId)) {
+        map.setPaintProperty(layerId, 'line-color', paint.roadHighway['line-color']);
+        map.setPaintProperty(layerId, 'line-opacity', paint.roadHighway['line-opacity']);
+      }
+    });
+
+    // Apply label styling
+    ['place-label', 'settlement-label', 'country-label'].forEach(layerId => {
+      if (map.getLayer(layerId)) {
+        map.setPaintProperty(layerId, 'text-color', paint.label['text-color']);
+        map.setPaintProperty(layerId, 'text-halo-color', paint.label['text-halo-color']);
+        map.setPaintProperty(layerId, 'text-halo-width', paint.label['text-halo-width']);
+        map.setPaintProperty(layerId, 'text-opacity', paint.label['text-opacity']);
+      }
+    });
+
+    // Apply POI label styling
+    ['poi-label', 'poi'].forEach(layerId => {
+      if (map.getLayer(layerId)) {
+        map.setPaintProperty(layerId, 'text-color', paint.poiLabel['text-color']);
+        map.setPaintProperty(layerId, 'text-halo-color', paint.poiLabel['text-halo-color']);
+        map.setPaintProperty(layerId, 'text-halo-width', paint.poiLabel['text-halo-width']);
+        map.setPaintProperty(layerId, 'text-opacity', paint.poiLabel['text-opacity']);
+      }
+    });
+  });
 }
 
-// Theme config (not used with raster tiles but kept for compatibility)
+// Theme config (not used but kept for compatibility)
 export const mapThemeConfig = {};
-export const watercolorCanvasStyles = {};
-export const watercolorPaintProperties = {};
